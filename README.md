@@ -1,4 +1,4 @@
-# COVID-19 SIR mathematical model for Spain
+# COVID-19 SIR mathematical model for Andalusia
 
 SIR mathematical model for infectious diseases optimized for COVID-19 using Spanish Ministry of Health public available data for Andalusia.
 
