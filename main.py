@@ -19,8 +19,14 @@ if not os.path.exists("images"):
 url = "https://covid19.isciii.es/resources/serie_historica_acumulados.csv"
 s = requests.get(url).text
 
-#url2 = "https://raw.githubusercontent.com/datadista/datasets/master/COVID%2019/nacional_covid19.csv"
-#s2 = requests.get(url2).text
+url2 = "https://raw.githubusercontent.com/datadista/datasets/master/COVID%2019/ccaa_covid19_casos_long.csv"
+s2 = requests.get(url2).text
+
+url3 = "https://raw.githubusercontent.com/datadista/datasets/master/COVID%2019/ccaa_covid19_altas_long.csv"
+s3 = requests.get(url3).text
+
+url4 = "https://raw.githubusercontent.com/datadista/datasets/master/COVID%2019/ccaa_covid19_fallecidos_long.csv"
+s4 = requests.get(url4).text
 
 # save file
 
@@ -28,13 +34,24 @@ fn = os.path.join("data","serie_historica_acumulados.csv")
 with open(fn, "w") as f:
     f.write(s)
 
-#fn2 = os.path.join("data","nacional_covid19.csv")
-#with open(fn2, "w") as f2:
-#    f2.write(s2)
+fn2 = os.path.join("data","ccaa_covid19_casos_long.csv")
+with open(fn2, "w") as f2:
+    f2.write(s2)
+
+fn3 = os.path.join("data","ccaa_covid19_altas_long.csv")
+with open(fn3, "w") as f3:
+    f3.write(s3)
+
+fn4 = os.path.join("data","ccaa_covid19_fallecidos_long.csv")
+with open(fn4, "w") as f4:
+    f4.write(s4)
 
 # read file
 
 df = pd.read_csv(fn, encoding="latin1")
+df2 = pd.read_csv(fn2)
+df3 = pd.read_csv(fn3)
+df4 = pd.read_csv(fn4)
 
 # prepare
 
@@ -43,9 +60,26 @@ df = df.fillna(0)
 df.columns = ["ccaa", "date", "cases", "hospitalized", "uci", "dead", "recovered"]
 df["date"] = pd.to_datetime(df["date"], format="%d/%m/%Y")
 
-dft = df[df["ccaa"]=="AN"][["date", "cases", "hospitalized", "uci", "dead", "recovered"]]
-dft = dft[dft["cases"] > 1]
-dft = dft.set_index("date")
+df2.columns = ["date", "code", "ccaa", "cases"]
+df3.columns = ["date", "code", "ccaa", "recovered"]
+df4.columns = ["date", "code", "ccaa", "dead"]
+df2 = df2[df2["ccaa"] == "Andalucía"]
+df3 = df3[df3["ccaa"] == "Andalucía"]
+df4 = df4[df4["ccaa"] == "Andalucía"]
+df2["date"] = pd.to_datetime(df2["date"], format="%Y-%m-%d")
+df2 = df2.set_index("date")
+df3["date"] = pd.to_datetime(df3["date"], format="%Y-%m-%d")
+df3 = df3.set_index("date")
+df4["date"] = pd.to_datetime(df4["date"], format="%Y-%m-%d")
+df4 = df4.set_index("date")
+df2["recovered"] = df3["recovered"]
+df2["dead"] = df4["dead"]
+df2 = df2[["cases", "recovered", "dead"]]
+
+#dft = df[df["ccaa"]=="AN"][["date", "cases", "hospitalized", "uci", "dead", "recovered"]]
+#dft = dft[dft["cases"] > 1]
+#dft = dft.set_index("date")
+dft = df2
 dft = dft.fillna(0)
 
 dfp = df.pivot(index="date", columns="ccaa", values="cases")
@@ -212,12 +246,12 @@ dff[["forecast", "cases"]].to_csv(os.path.join("data", "generated-cases.csv"))
 metadata = {'Creator': None, 'Producer': None, 'CreationDate': None}
 
 fig, ax = plt.subplots(figsize=(8,6))
-dfto[["cases", "hospitalized", "uci", "dead", "recovered"]].plot(ax=ax)
+dfto[["cases", "dead", "recovered"]].plot(ax=ax)
 ax.set_title("Totals in Andalusia")
 ax.set_xlabel("")
 ax.set_ylabel("# of occurences")
 ax.grid(True, which="both")
-dfto[["cases", "hospitalized", "uci", "dead", "recovered"]].to_csv(os.path.join("data", "generated-total.csv"))
+dfto[["cases", "dead", "recovered"]].to_csv(os.path.join("data", "generated-total.csv"))
 plt.savefig(os.path.join("images", "generated-total.png"), format="png", dpi=300)
 plt.savefig(os.path.join("images", "generated-total.pdf"), format="pdf", dpi=300, metadata=metadata)
 

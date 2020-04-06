@@ -22,33 +22,29 @@ SIR mathematical model for infectious diseases optimized for COVID-19 using Span
 
 | Date           | Infected | Cases    |
 |:--------------:|:--------:|:--------:|
-| 2020-04-06     | 7005     | 8379     |
-| 2020-04-07     | 7078     | 8572     |
-| 2020-04-08     | 7117     | 8733     |
-| **2020-04-09** | **7130** | **8867** |
-| 2020-04-10     | 7119     | 8978     |
-| 2020-04-11     | 7090     | 9070     |
-| 2020-04-12     | 7045     | 9146     |
-| 2020-04-13     | 6988     | 9208     |
-| 2020-04-14     | 6920     | 9260     |
-| 2020-04-15     | 6845     | 9302     |
-| 2020-04-16     | 6764     | 9337     |
-| 2020-04-17     | 6678     | 9366     |
-| 2020-04-18     | 6589     | 9390     |
-| 2020-04-19     | 6497     | 9410     |
-| 2020-04-20     | 6403     | 9427     |
-| 2020-04-21     | 6309     | 9441     |
-| 2020-04-22     | 6213     | 9452     |
-| 2020-04-23     | 6117     | 9462     |
-| 2020-04-24     | 6022     | 9470     |
+| 2020-04-07     | 7454     | 8552     |
+| 2020-04-08     | 7614     | 8814     |
+| 2020-04-09     | 7736     | 9040     |
+| 2020-04-10     | 7823     | 9234     |
+| 2020-04-11     | 7880     | 9398     |
+| 2020-04-12     | 7912     | 9537     |
+| **2020-04-13** | **7921** | **9654** |
+| 2020-04-14     | 7912     | 9752     |
+| 2020-04-15     | 7887     | 9835     |
+| 2020-04-16     | 7849     | 9904     |
+| 2020-04-17     | 7800     | 9962     |
+| 2020-04-18     | 7743     | 10010    |
+| 2020-04-19     | 7679     | 10051    |
+| 2020-04-20     | 7608     | 10085    |
+| 2020-04-21     | 7534     | 10113    |
 
 ### Optimized SIR parameters
 
 ```
-N = 9516.440992219435
-beta = 0.26803845322813985
-gamma = 0.01690594058973596
-delta = 0.9264459007606025
+N = 10270.368149211
+beta = 0.3630502057282832
+gamma = 0.013470992406278581
+delta = 0.6155023323600345
 delay = 0
 ```
 
@@ -74,6 +70,11 @@ Main data source:
 * Spanish government: https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov-China/situacionActual.htm
   * https://covid19.isciii.es/
   * https://covid19.isciii.es/resources/serie_historica_acumulados.csv
+
+* Github: https://github.com/datadista/datasets
+  * https://raw.githubusercontent.com/datadista/datasets/master/COVID%2019/ccaa_covid19_casos_long.csv
+  * https://raw.githubusercontent.com/datadista/datasets/master/COVID%2019/ccaa_covid19_altas_long.csv
+  * https://raw.githubusercontent.com/datadista/datasets/master/COVID%2019/ccaa_covid19_fallecidos_long.csv
 
 ### Epidemiology model
 
