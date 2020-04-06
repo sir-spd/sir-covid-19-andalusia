@@ -216,7 +216,7 @@ dft["S"] = S
 dft["I"] = I
 dft["R"] = R
 
-dft["susceptible"] = N - dft["infected"]
+dft["susceptible"] = N - dft["infected"] - dft["recovered"]
 
 # forecasting
 
