@@ -57,7 +57,7 @@ df4 = pd.read_csv(fn4)
 
 df = df[:-2]
 df = df.fillna(0)
-df.columns = ["ccaa", "date", "cases", "hospitalized", "uci", "dead", "recovered"]
+df.columns = ["ccaa", "date", "cases", "hospitalized", "uci", "dead", "recovered", ""]
 df["date"] = pd.to_datetime(df["date"], format="%d/%m/%Y")
 
 df2.columns = ["date", "code", "ccaa", "cases"]
@@ -76,10 +76,10 @@ df2["recovered"] = df3["recovered"]
 df2["dead"] = df4["dead"]
 df2 = df2[["cases", "recovered", "dead"]]
 
-#dft = df[df["ccaa"]=="AN"][["date", "cases", "hospitalized", "uci", "dead", "recovered"]]
-#dft = dft[dft["cases"] > 1]
-#dft = dft.set_index("date")
-dft = df2
+dft = df[df["ccaa"]=="AN"][["date", "cases", "hospitalized", "uci", "dead", "recovered"]]
+dft = dft[dft["cases"] > 1]
+dft = dft.set_index("date")
+#dft = df2
 dft = dft.fillna(0)
 
 dfp = df.pivot(index="date", columns="ccaa", values="cases")
