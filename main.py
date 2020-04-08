@@ -55,10 +55,10 @@ df4 = pd.read_csv(fn4)
 
 # prepare
 
-df = df[:-2]
+df = df[:-3]
 df = df.fillna(0)
-df.columns = ["ccaa", "date", "cases", "hospitalized", "uci", "dead", "recovered", ""]
-df["date"] = pd.to_datetime(df["date"], format="%d/%m/%Y")
+df.columns = ["ccaa", "date", "cases", "hospitalized", "uci", "dead", "recovered"]
+df["date"] = pd.to_datetime(df["date"], format="%d/%m/%Y", infer_datetime_format=True)
 
 df2.columns = ["date", "code", "ccaa", "cases"]
 df3.columns = ["date", "code", "ccaa", "recovered"]
