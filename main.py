@@ -201,7 +201,7 @@ nlckdays = 55 # days
 
 delay = 0 # days back
 result = fdelay_lockdown(delay, lckday, nlckchgdays, nlckdays)
-for d in range(5):
+for d in range(3):
     #res = fdelay(d)
     res = fdelay_lockdown(d, lckday, nlckchgdays, nlckdays)
     print("delay: {}, fun: {}".format(d, res.fun))
