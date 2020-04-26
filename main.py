@@ -57,7 +57,7 @@ df4 = pd.read_csv(fn4)
 
 df = df[:-4]
 df = df.fillna(0)
-df.columns = ["ccaa", "date", "cases", "hospitalized", "uci", "dead", "recovered"]
+df.columns = ["ccaa", "date", "cases", "pcr", "ac", "hospitalized", "uci", "dead", "recovered"]
 df["date"] = pd.to_datetime(df["date"], format="%d/%m/%Y", infer_datetime_format=True)
 
 df2.columns = ["date", "code", "ccaa", "cases"]
@@ -76,16 +76,15 @@ df2["recovered"] = df3["recovered"]
 df2["dead"] = df4["dead"]
 df2 = df2[["cases", "recovered", "dead"]]
 
-dft = df[df["ccaa"]=="AN"][["date", "cases", "hospitalized", "uci", "dead", "recovered"]]
-dft = dft[dft["cases"] > 1]
+dft = df[df["ccaa"]=="AN"][["date", "cases", "pcr", "ac", "hospitalized", "uci", "dead", "recovered"]]
+dft = dft[(dft["cases"] > 1) | (dft["pcr"] > 1) | (dft["ac"] > 1)]
 dft = dft.set_index("date")
 #dft = df2
 dft = dft.fillna(0)
 
-dfp = df.pivot(index="date", columns="ccaa", values="cases")
-
 dfto = dft.copy()
 
+dft["cases"] = dft["cases"] + dft["pcr"] + dft["ac"]
 dfpct = 100*dft["dead"]/dft["cases"]
 dft["recovered"] = dft["recovered"] + dft["dead"] # as SIR model defines
 dft["infected"] = dft["cases"] - dft["recovered"]
@@ -196,7 +195,7 @@ def fdelay_lockdown(delay, lckday, nlckchgdays, nlckdays):
     return result
 
 lckday = dft.index.get_loc(pd.to_datetime("2020-03-15"))
-nlckchgdays = 30 # days to first significant change in lockdown
+nlckchgdays = 33 # days to first significant change in lockdown
 nlckdays = 55 # days
 
 delay = 0 # days back
