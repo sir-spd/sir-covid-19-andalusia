@@ -76,15 +76,15 @@ df2["recovered"] = df3["recovered"]
 df2["dead"] = df4["dead"]
 df2 = df2[["cases", "recovered", "dead"]]
 
-dft = df[df["ccaa"]=="AN"][["date", "cases", "pcr", "ac", "hospitalized", "uci", "dead", "recovered"]]
-dft = dft[(dft["cases"] > 1) | (dft["pcr"] > 1) | (dft["ac"] > 1)]
-dft = dft.set_index("date")
-#dft = df2
+#dft = df[df["ccaa"]=="AN"][["date", "cases", "pcr", "ac", "hospitalized", "uci", "dead", "recovered"]]
+#dft = dft[(dft["cases"] > 1) | (dft["pcr"] > 1) | (dft["ac"] > 1)]
+#dft = dft.set_index("date")
+dft = df2[df2["cases"]>0]
 dft = dft.fillna(0)
 
 dfto = dft.copy()
 
-dft["cases"] = dft["cases"] + dft["pcr"] + dft["ac"]
+#dft["cases"] = dft["cases"] + dft["pcr"] + dft["ac"]
 dfpct = 100*dft["dead"]/dft["cases"]
 dft["recovered"] = dft["recovered"] + dft["dead"] # as SIR model defines
 dft["infected"] = dft["cases"] - dft["recovered"]
